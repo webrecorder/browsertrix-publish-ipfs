@@ -1,0 +1,14 @@
+{
+  "name": "bucket2ipfs",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@ipld/dag-pb": "^4.0.3",
+    "ipfs-unixfs": "^11.0.1",
+    "kubo-rpc-client": "^3.0.1",
+    "minio": "7.0.26",
+    "multiformats": "^12.0.1"
+  }
+}
