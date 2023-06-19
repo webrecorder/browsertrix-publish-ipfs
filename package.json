@@ -9,6 +9,8 @@
     "ipfs-unixfs": "^11.0.1",
     "kubo-rpc-client": "^3.0.1",
     "minio": "7.0.26",
-    "multiformats": "^12.0.1"
+    "mongodb": "^5.6.0",
+    "multiformats": "^12.0.1",
+    "uuid-mongodb": "^2.5.4"
   }
 }

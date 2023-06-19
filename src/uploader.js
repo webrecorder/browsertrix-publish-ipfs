@@ -1,13 +1,13 @@
 export class Uploader
 {
-  constructor(ipfs, uploadConfig, downloadOrigin) {
+  constructor(ipfs, config, downloadOrigin) {
     this.ipfs = ipfs;
     this.downloadOrigin = downloadOrigin;
-    this.uploadConfig = uploadConfig;
+    this.config = config;
   }
 
   async run() {
-    for (const coll of this.uploadConfig) {
+    for (const coll of this.config.collections) {
       await this.uploadCollFiles(coll);
     }
 
@@ -18,7 +18,7 @@ export class Uploader
     const files = [];
     const archives = [];
 
-    for (const coll of this.uploadConfig) {
+    for (const coll of this.config.collections) {
       const path = `colls/${coll.name}.json`;
       archives.push({name: coll.name, url: path});
       files.push({path, content: JSON.stringify(coll, null, 2)});
@@ -26,7 +26,7 @@ export class Uploader
 
     const mainConfig = {
       "site": {
-        "title": "My Web Archives",
+        "title": this.config.name,
       },
       "replay": {
         "version": "",
