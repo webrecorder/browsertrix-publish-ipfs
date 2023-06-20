@@ -48,7 +48,7 @@ export class Uploader
   async uploadCollFiles(coll) {
     for (const resource of coll.resources) {
       if (!resource.cid && !resource.path.startsWith("ipfs://")) {
-        const url = this.downloadOrigin + resource.path;
+        const url = new URL(resource.path, this.downloadOrigin);
 
         const resp = await fetch(url);
         if (!resp.ok) {
