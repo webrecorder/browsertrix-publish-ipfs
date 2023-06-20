@@ -20,7 +20,7 @@ export class Uploader
 
     for (const coll of this.config.collections) {
       const path = `colls/${coll.name}.json`;
-      archives.push({name: coll.name, url: path});
+      archives.push({name: coll.name, description: coll.description, url: path});
       files.push({path, content: JSON.stringify(coll, null, 2)});
     }
 

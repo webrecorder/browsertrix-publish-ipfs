@@ -1,6 +1,6 @@
 {
   "name": "browsertrix-publish-ipfs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "index.js",
   "repository": "https://github.com/webrecorder/browsertrix-publish-ipfs",
@@ -14,5 +14,11 @@
     "mongodb": "^5.6.0",
     "multiformats": "^12.0.1",
     "uuid-mongodb": "^2.5.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.43.0"
+  },
+  "scripts": {
+    "lint": "eslint"
   }
 }

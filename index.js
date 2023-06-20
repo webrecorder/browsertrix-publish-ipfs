@@ -10,8 +10,6 @@ const replayRoot = process.env.REPLAY_ROOT_CID || "bafybeic3zi46caikdvukly7xwnjr
 
 const kuboUrl = process.env.KUBO_URL || "http://localhost:5001/";
 
-const uploadConfigFile = process.env.UPLOAD_CONFIG || "config.json";
-
 const downloadOrigin = process.env.DOWNLOAD_ORIGIN || "http://localhost:30870";
 
 
@@ -22,7 +20,7 @@ async function main() {
 
   const resp = await fetch(allColls);
   if (!resp.ok) {
-    console.log(`invalid config: ${resp.status} - ${url}`);
+    console.log(`invalid config: ${resp.status} - ${allColls}`);
     process.exit(1);
   }
 
