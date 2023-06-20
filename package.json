@@ -1,9 +1,11 @@
 {
-  "name": "bucket2ipfs",
-  "version": "1.0.0",
+  "name": "browsertrix-publish-ipfs",
+  "version": "0.1.0",
   "type": "module",
   "main": "index.js",
-  "license": "MIT",
+  "repository": "https://github.com/webrecorder/browsertrix-publish-ipfs",
+  "author": "Webrecorder Software",
+  "license": "AGPL-3.0-or-later",
   "dependencies": {
     "@ipld/dag-pb": "^4.0.3",
     "ipfs-unixfs": "^11.0.1",
