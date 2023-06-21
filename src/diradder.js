@@ -7,6 +7,16 @@ export class DirAdder {
     this.ipfs = ipfs;
   }
 
+  async makeDir(files) {
+    const node = new UnixFS({ type: "directory" });
+
+    const Data = node.marshal();
+
+    const Links = await this.createDirLinks(files);
+
+    return await this.putBlock({ Data, Links });
+  }
+
   async addToDir(dirCid, files) {
     if (dirCid.code == rawCode) {
       throw new Error("raw cid -- not a directory");
@@ -30,7 +40,13 @@ export class DirAdder {
     // todo: disallow duplicates
     Links.sort((a, b) => (a.Name < b.Name ? -1 : 1));
 
-    return await this.ipfs.block.put(dagPb.encode(dagPb.prepare({Data, Links})), {version: 1, format: "dag-pb"});
+    return await this.putBlock({Data, Links});
+  }
+
+  async putBlock(data) {
+    return await this.ipfs.block.put(dagPb.encode(dagPb.prepare(data)),
+      {version: 1, format: "dag-pb"}
+    );
   }
 
   async getSize(cid, allowDir = false) {
@@ -61,6 +77,9 @@ export class DirAdder {
 
   async createDirLinks(files) {
     const names = Object.keys(files);
+    if (!names.length) {
+      return [];
+    }
     names.sort();
 
     return await Promise.all(

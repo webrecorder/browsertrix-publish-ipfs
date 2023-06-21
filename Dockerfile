@@ -7,6 +7,6 @@ RUN yarn install
 
 ADD index.js /app/
 ADD src/*.js /app/src/
-
+ADD replay.car /app/
 
 CMD node index.js

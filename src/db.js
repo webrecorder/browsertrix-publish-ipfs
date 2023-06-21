@@ -23,6 +23,10 @@ async function initDB(dbName) {
 }
 
 export async function updateOrgIPFSUrl(oid, cid) {
+  if (!process.env.MONGO_DB_URL && !process.env.MONGO_INITDB_ROOT_USERNAME) {
+    return;
+  }
+
   const db = await initDB("browsertrixcloud");
 
   const coll = db.collection("organizations");
