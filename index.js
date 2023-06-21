@@ -7,7 +7,6 @@ import { DirAdder } from "./src/diradder.js";
 
 import { updateOrgIPFSUrl } from "./src/db.js";
 
-//const replayRoot = process.env.REPLAY_ROOT_CID || "bafybeic3zi46caikdvukly7xwnjrecbvmllafvopvlyw6ylt3oeht7h5om";
 const replayCAR = process.env.REPLAY_CAR || "replay.car";
 
 const kuboUrl = process.env.KUBO_URL || "http://localhost:5001/";
@@ -22,7 +21,10 @@ async function main() {
 
   let replayRoot = null;
 
-  if (replayCAR) {
+  if (process.env.REPLAY_ROOT_CID) {
+    replayRoot = process.env.REPLAY_ROOT_CID;
+    console.log(`Using replay root CID: ${replayRoot}`);
+  } else if (replayCAR) {
     console.log(`Importing Replay CAR: ${replayCAR}`);
     const blob = await fs.openAsBlob(replayCAR);
     const formData = new FormData();
