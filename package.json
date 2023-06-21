@@ -1,6 +1,6 @@
 {
   "name": "browsertrix-publish-ipfs",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "main": "index.js",
   "repository": "https://github.com/webrecorder/browsertrix-publish-ipfs",
@@ -19,6 +19,6 @@
     "eslint": "^8.43.0"
   },
   "scripts": {
-    "lint": "eslint"
+    "lint": "eslint index.js src/*.js"
   }
 }

@@ -7,21 +7,20 @@ export class Uploader
   }
 
   async run() {
-    for (const coll of this.config.collections) {
-      await this.uploadCollFiles(coll);
-    }
-
-    return await this.uploadConfigs();
-  }
-
-  async uploadConfigs() {
     const files = [];
+
     const archives = [];
 
     for (const coll of this.config.collections) {
-      const path = `colls/${coll.name}.json`;
-      archives.push({name: coll.name, description: coll.description, url: path});
-      files.push({path, content: JSON.stringify(coll, null, 2)});
+      const prefix = `collections/${coll.name}/`;
+      const manifestFile = "archive.json";
+      await this.processColl(coll, files, prefix, manifestFile);
+
+      archives.push({
+        name: coll.name,
+        description: coll.description,
+        url: prefix + manifestFile
+      });
     }
 
     const mainConfig = {
@@ -34,18 +33,22 @@ export class Uploader
       },
       "archives": archives
     };
+
     files.push({path: "wrg-config.json", content: JSON.stringify(mainConfig, null, 2)});
      
     const filesToAdd = [];
 
     for await (const upload of await this.ipfs.addAll(files, {cidVersion: 1, wrapWithDirectory: false, rawLeaves: true})) {
-      filesToAdd[upload.path] = {cid: upload.cid};
+      console.log("upload", upload);
+      if (upload.path) {
+        filesToAdd[upload.path] = {cid: upload.cid};
+      }
     }
 
     return filesToAdd;
   }
 
-  async uploadCollFiles(coll) {
+  async processColl(coll, files, prefix, manifestFile) {
     for (const resource of coll.resources) {
       if (!resource.cid && !resource.path.startsWith("ipfs://")) {
         const url = new URL(resource.path, this.downloadOrigin);
@@ -56,11 +59,15 @@ export class Uploader
           continue;
         }
 
-        const res = await this.ipfs.add({content: resp.body}, {cidVersion: 1, wrapWithDirectory: false});
-        resource.path = `ipfs://${res.cid}#.wacz`;
-        console.log(resource);
+        const name = "files/" + resource.name.replace("/", "-");
+        resource.path = name;
+        //resource.path = `ipfs://${res.cid}#.wacz`;
+
+        files.push({path: prefix + name, content: resp.body});
       }
     }
+
+    files.push({path: prefix + manifestFile, content: JSON.stringify(coll, null, 2)});
   }
 }
 
