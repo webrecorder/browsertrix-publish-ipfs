@@ -1,6 +1,6 @@
 {
   "name": "browsertrix-publish-ipfs",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "main": "index.js",
   "repository": "https://github.com/webrecorder/browsertrix-publish-ipfs",
